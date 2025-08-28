@@ -37,21 +37,6 @@ JWT_SECRET_KEY=tu_clave_secreta_para_JWT
 ```
 
 ---
-
-## 🛠️ Instalación y configuración
-1. Clona este repositorio  
-   ```bash
-   git clone https://github.com/DaniGomAris/football_fantasy-back.git
-   cd football_fantasy-back
-   ```
-
-2. Crea y activa un entorno virtual  
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # macOS/Linux
-   venv\Scripts\activate     # Windows
-   ```
-
 ## 📌 Endpoints principales
 
 ### 🔹 Registro (Sign-Up)
