@@ -1,138 +1,167 @@
-# 💊 SmartAdmin
+# Football Fantasy – Backend API
 
-**SmartPill** is a web page that helps users manage their towers. This repository includes both the **backend (Flask + Firebase)** and the **frontend (Angular)** of the project.
-
----
-
-## ⚙️ Backend (Flask)
-
-### 🔧 Requirements
-
-- Python 3.10 or higher
-- Virtualenv (recommended) (.\venv\Scripts\activate)
-- Firebase project with service account key
-
-## 🔧 Firestore Setup Guide
-
-This project uses Firebase Firestore to store user data. Since the database key (`firebase_key.json`) is private and not included for security reasons, follow these steps to connect your own Firestore instance.
+API backend para una plataforma de Fantasy Football, construida con **Flask** y Firestore (Firebase).
 
 ---
 
-### ✅ Step 1: Create a Firebase Project
-
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Click **"Add project"**
-3. Choose a name (e.g., `smartpill-demo`) and follow the instructions
-4. You can skip Google Analytics setup
-
----
-
-### 🔥 Step 2: Enable Firestore
-
-1. In the Firebase Console, go to **"Build" > "Firestore Database"**
-2. Click **"Create database"**
-3. Select **Start in test mode** (or production if preferred)
-4. Pick a region and click **"Enable"**
+## 🚀 Tecnologías principales
+- **Python 3.10+**
+- **Flask** – framework web ligero
+- **Firestore (Firebase)** – base de datos NoSQL en la nube
+- **JWT (JSON Web Tokens)** – autenticación segura
+- **Werkzeug** – hashing de contraseñas
+- **Pytest / Unittest** – pruebas unitarias
 
 ---
 
-### 📁 Step 3: Create the `users` Collection
-
-1. Click **"Start collection"**
-2. Use `users` as the collection name
-3. Add a dummy document with the following fields (all type **string**):
-
-| Field         | Example Value         |
-|---------------|------------------------|
-| document      | "123456"               |
-| document_type | "CC"                   |
-| name          | "John"                 |
-| last_names    | "Doe"                  |
-| email         | "john@example.com"     |
-| password      | "hashedpassword"       |
-| years         | "28"                   |
-
-You can delete this dummy later — it’s just to initialize the structure.
+## ⚡ Funcionalidades clave
+- Registro de usuario (sign-up)
+- Inicio de sesión (login)
+- Autenticación basada en JWT
+- Operaciones protegidas:
+  - Consultar y editar información de usuario
+  - Editar equipo propio (añadir, remover, sustituir jugadores)
+  - Consultar jugadores disponibles y equipo armado
 
 ---
 
-### 🔐 Step 4: Generate Admin SDK Key
+## 📦 Requisitos
+- Python 3.10 o superior
+- Proyecto Firebase con **Firestore habilitado**
+- Clave de servicio de Firebase (`.json`)
+- Variables de entorno configuradas:
 
-1. Go to **"Project settings"** (gear icon)
-2. Click **"Service accounts"** tab
-3. Click **"Generate new private key"**
-4. This will download a `.json` file
-5. Rename it to `firebase_key.json` and place it in the `backend/` folder
-
-### 🛠️ Step 5: Setup
-
-1. **Create a virtual environment**:
-   ```bash
-   python -m venv venv
-   ```
-
-2. **Activate the environment**:
-   - **Windows**:
-     ```bash
-     venv\Scripts\activate
-     ```
-   - **macOS/Linux**:
-     ```bash
-     source venv/bin/activate
-     ```
-
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Create a `.env` file** in the `backend/` folder:
-   ```env
-   FIREBASE_KEY_PATH=firebase_key.json
-   JWT_SECRET_KEY=your-secret-key
-   ```
-
-5. **Run the backend server**:
-   ```bash
-   python app.py
-   ```
-
----
-
-## 🔐 Authentication
-
-- Authentication is handled via **JWT (JSON Web Tokens)**.
-- Passwords are securely **hashed** using `werkzeug.security` before storing them in Firebase.
-
----
-
-## 🧪 Testing
-
-All unit tests are located in the `backend/tests/` directory.
-
-To run a test file:
 ```bash
-python tests/test_firebase.py
+FIREBASE_KEY_PATH=path/a/tu/firebase_key.json
+JWT_SECRET_KEY=tu_clave_secreta_para_JWT
 ```
 
 ---
 
-## 📂 Git Best Practices
+## 🛠️ Instalación y configuración
+1. Clona este repositorio  
+   ```bash
+   git clone https://github.com/DaniGomAris/football_fantasy-back.git
+   cd football_fantasy-back
+   ```
 
-- All sensitive files like `.env` and `firebase_key.json` are ignored via `.gitignore`.
-- Use branches for features and open Pull Requests when merging into `main`.
+2. Crea y activa un entorno virtual  
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # macOS/Linux
+   venv\Scripts\activate     # Windows
+   ```
+
+## 📌 Endpoints principales
+
+### 🔹 Registro (Sign-Up)
+
+```
+POST /signup
+Headers: Content-Type: application/json
+Body:
+{
+  "name": "Tu Nombre",
+  "email": "ejemplo@correo.com",
+  "password": "tu_contraseña",
+  "username": "usuario123"
+}
+```
+
+### 🔹 Inicio de sesión (Login)
+```
+POST /login
+Body:
+{
+  "userOrEmail": "usuario123 o ejemplo@correo.com",
+  "password": "tu_contraseña"
+}
+```
+➡️ Devuelve un **JWT** en una cookie de autenticación.
+
+### 🔹 Consultar usuario
+```
+GET /user
+Headers: Authorization: Bearer <tu_JWT>
+```
+
+### 🔹 Editar usuario
+```
+PUT /user
+Body:
+{
+  "info": "Enum {Password, UserName, Name}",
+  "currentPassword": "contraseña_actual",
+  "newValue": "nuevo_valor"
+}
+```
+
+### 🔹 Obtener jugadores
+```
+POST /players
+Body:
+{
+  "sortType": "Enum {Default, PointSort, CostSort, NameSort, WebName}",
+  "sortOrder": "Enum {Descending, Ascending}",
+  "position": "Enum {Default, Goalkeepers, Defenders, Midfielders, Forwards}",
+  "search": "nombre_a_buscar",
+  "paginationPage": número,
+  "paginationLength": número,
+  "teamID": número (0 para todos los equipos)
+}
+```
+
+### 🔹 Editar equipo
+```
+PUT /team
+Body:
+{
+  "action": "Enum {Add, Remove, Substitution}",
+  "id_1": id_jugador1,
+  "id_2": id_jugador2 // solo para 'Substitution'
+}
+```
+
+### 🔹 Consultar equipo
+```
+POST /team
+Body:
+{
+  "type": "Enum {Any, Fixed, Substitutes}",
+  "position": "Enum {Default, Goalkeepers, Defenders, Midfielders, Forwards}"
+}
+```
 
 ---
 
-## 📄 License
+## 🧪 Testing
+Ejecuta las pruebas unitarias con:
 
-This project is for educational and demonstration purposes. Feel free to use, modify, and extend it as needed
+```bash
+pytest
+# o
+python -m unittest discover tests
+```
 
 ---
 
-## 📬 Contact
+## 📌 Buenas prácticas de Git
+- Ignorar archivos sensibles en `.gitignore` (`.env`, claves Firebase, etc.)
+- Crear ramas para nuevas funcionalidades
+- Abrir Pull Requests hacia `main` para revisión
 
-Author:
-GitHub: DaniGomAris
+---
+
+## 🚀 Futuras mejoras
+- Migración a **Argon2 o bcrypt** para hashing de contraseñas
+- Documentación con **Swagger / OpenAPI**
+- Validación de datos con **Pydantic o Marshmallow**
+- Integración continua (CI/CD) para despliegues automáticos
+
+---
+
+## 👨‍💻 Autor
+Proyecto desarrollado por **[@DaniGomAris](https://github.com/DaniGomAris)**  
+Uso educativo y libre adaptación.
 
 ---

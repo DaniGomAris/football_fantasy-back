@@ -31,19 +31,6 @@ def test_invalid_document_type():
     assert not validator.is_valid_document_type("DNI")
     assert not validator.is_valid_document_type("")
     assert not validator.is_valid_document_type("123")
-
-
-# ------------------------------
-# Role
-# ------------------------------
-def test_valid_role():
-    assert validator.is_valid_role("admin")
-
-def test_invalid_role():
-    assert not validator.is_valid_role("Admin")
-    assert not validator.is_valid_role("user")
-    assert not validator.is_valid_role("")
-    assert not validator.is_valid_role(None)
     
     
 # ------------------------------
