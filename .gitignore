@@ -57,3 +57,6 @@ Thumbs.db
 # Notes / Scripts
 notes.txt
 generate-hash.js
+
+# Lock files
+package-lock.json
