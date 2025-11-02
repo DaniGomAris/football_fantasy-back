@@ -1,4 +1,5 @@
-# Node
+
+# Node.js dependencies
 node_modules/
 
 # Environment variables
@@ -13,12 +14,14 @@ yarn-debug.log*
 yarn-error.log*
 *.log
 *.log.*
+
+# PIDs
 pids/
 *.pid
 *.seed
 *.pid.lock
 
-# Coverage
+# Test coverage
 coverage/
 *.lcov
 
@@ -29,34 +32,28 @@ build/
 .tmp/
 .out/
 
-# Mongo dump / backups
+# Database dumps / backups
 *.bson
-*.json
 *.lock
 
-# IDE / Editor
+# IDE / Editor configs
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS files
+# OS-specific files
 .DS_Store
 Thumbs.db
 
-# Debug
+# Debug / Archives
 *.tgz
 *.tar.gz
 
-# Postman collections/environment exports
+# Postman exports
 *.postman_collection.json
 *.postman_environment.json
 
-# Moduels
-node_modules
-
-# Notes
+# Notes / Scripts
 notes.txt
-
-# Archives
 generate-hash.js
