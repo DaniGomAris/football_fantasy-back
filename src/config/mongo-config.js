@@ -8,7 +8,7 @@ const connectDB = async () => {
       dbName: process.env.DB_NAME,
     });
     logger.info("Connected to MondoDB");
-  } catch (error) {
+  } catch (err) {
     logger.error("Error conectando a MongoDB:", err);
     process.exit(1)
   }

@@ -8,11 +8,11 @@ const UserController = require("./user-controller");
 router.post("/register", UserController.register);
 
 // Update user (PUT /user/:id)
-router.put("/:id", validToken, authorizeRoles(["psychologist", "patient"]), UserController.update);
+router.put("/:id", validToken, authorizeRoles(["admin", "user"]), UserController.update);
 
 // Get all users (GET /user/get-users)
-router.get("/get-users", validToken, authorizeRoles(["psychologist"]), UserController.getUsers);
+router.get("/get-users", validToken, authorizeRoles(["user"]), UserController.getUsers);
 
 // Delete own user (DELETE user/delete-me)
-router.delete("/delete-me", validToken, authorizeRoles(["psychologist", "patient"]), UserController.deleteUser);
+router.delete("/delete-me", validToken, authorizeRoles(["user", "user"]), UserController.deleteUser);
 module.exports = router;

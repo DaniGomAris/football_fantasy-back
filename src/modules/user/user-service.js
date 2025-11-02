@@ -1,8 +1,6 @@
 const User = require("./models/user");
-const Cart = require("../cart/models/cart");
 const { validateUser } = require("./validators/user-validator");
 const { hashPassword } = require("../auth/strategies/password-strategy");
-const logger = require("../../utils/logger");
 
 class UserService {
 
@@ -48,7 +46,7 @@ class UserService {
     return userWithoutPassword;
   }
 
-  // Get all userss
+  // Get all users
   static async getUsers() {
     return await User.find({ role: "user" })
       .select("-password")

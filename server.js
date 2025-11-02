@@ -1,10 +1,7 @@
-require("module-alias/register");
-const app = require("@root/app");
-const logger = require("@utils/logger");
-
+const app = require("./src/app");
 const PORT = process.env.PORT;
 
+// Initialize server
 app.listen(PORT, () => {
-  logger.info(`Running on http://localhost:${PORT}`);
-  logger.info(`Server running on port ${PORT}`);
+  console.log(`Running on http://localhost:${PORT}`);
 });
